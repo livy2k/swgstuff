@@ -513,6 +513,7 @@
 #include "PurchaseTicketCommand.h"
 #include "QuickHealCommand.h"
 #include "RallyCommand.h"
+#include "RollCommand.h"
 #include "ReconnectToTransferServerCommand.h"
 #include "RecruitSkillTrainerCommand.h"
 #include "RegainConsciousnessCommand.h"

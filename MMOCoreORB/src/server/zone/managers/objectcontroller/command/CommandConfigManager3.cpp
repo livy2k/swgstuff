@@ -146,6 +146,7 @@
 #include "server/zone/objects/creature/commands/PurchaseTicketCommand.h"
 #include "server/zone/objects/creature/commands/QuickHealCommand.h"
 #include "server/zone/objects/creature/commands/RallyCommand.h"
+#include "server/zone/objects/creature/commands/RollCommand.h"
 #include "server/zone/objects/creature/commands/ReconnectToTransferServerCommand.h"
 #include "server/zone/objects/creature/commands/RecruitSkillTrainerCommand.h"
 #include "server/zone/objects/creature/commands/RegainConsciousnessCommand.h"
@@ -445,7 +446,8 @@ void CommandConfigManager::registerCommands3() {
 	commandFactory.registerCommand<PurchaseReinforcementCommand>(String("purchaseReinforcement").toLowerCase());
 	commandFactory.registerCommand<PurchaseTicketCommand>(String("purchaseTicket").toLowerCase());
 	commandFactory.registerCommand<QuickHealCommand>(String("quickHeal").toLowerCase());
-	commandFactory.registerCommand<RallyCommand>(String("rally").toLowerCase());
+ commandFactory.registerCommand<RallyCommand>(String("rally").toLowerCase());
+ 		commandFactory.registerCommand<RollCommand>(String("roll").toLowerCase());
 	commandFactory.registerCommand<ReconnectToTransferServerCommand>(String("reconnectToTransferServer").toLowerCase());
 	commandFactory.registerCommand<RecruitSkillTrainerCommand>(String("recruitSkillTrainer").toLowerCase());
 	commandFactory.registerCommand<RegainConsciousnessCommand>(String("regainConsciousness").toLowerCase());
