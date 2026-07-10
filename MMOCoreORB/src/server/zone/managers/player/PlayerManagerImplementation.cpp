@@ -1435,7 +1435,7 @@ void PlayerManagerImplementation::killPlayer(TangibleObject* attacker, CreatureO
 		}
 	}
 
-	if (ConfigManager::instance()->isPvpBroadcastChannelEnabled() && attacker->isPlayerCreature() && ghost != nullptr) {
+	if (ConfigManager::instance()->isPvpBroadcastChannelEnabled() && attacker->isPlayerCreature() && attacker != player && ghost != nullptr) {
 		ZoneServer* zoneServer = player->getZoneServer();
 
 		if (zoneServer != nullptr) {
