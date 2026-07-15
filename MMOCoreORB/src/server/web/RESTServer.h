@@ -33,6 +33,7 @@ namespace server {
  class APIProxyGuildManager;
  class APIProxyConfigManager;
  class APIProxyStatisticsManager;
+ class APIProxyVOIPManager;
  class RESTEndpoint;
 
  using namespace web;
@@ -52,6 +53,7 @@ namespace server {
 	APIProxyGuildManager* mGuildManagerProxy = nullptr;
 	APIProxyConfigManager* mConfigManagerProxy = nullptr;
 	APIProxyStatisticsManager* mStatisticsManager = nullptr;
+	APIProxyVOIPManager* mVOIPManagerProxy = nullptr;
 
 	void createProxies();
 	void destroyProxies();

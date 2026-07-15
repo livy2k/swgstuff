@@ -22,6 +22,7 @@
 #include "APIProxyGuildManager.h"
 #include "APIProxyConfigManager.h"
 #include "APIProxyStatisticsManager.h"
+#include "APIProxyVOIPManager.h"
 
 // Workaround for googletest conflict
 // See https://github.com/Microsoft/cpprestsdk/blob/master/Release/include/cpprest/details/basic_types.h#L95
@@ -107,6 +108,10 @@ void RESTServer::registerEndpoints() {
 
 	addEndpoint(RESTEndpoint("(?:GET|PUT):/v1/admin/stats/", {}, [this] (APIRequest& apiRequest) -> void {
 		mStatisticsManager->handle(apiRequest);
+	}));
+
+	addEndpoint(RESTEndpoint("(?:GET):/v1/voip/(?:(\\w+)/|)", {"action"}, [this] (APIRequest& apiRequest) -> void {
+		mVOIPManagerProxy->handle(apiRequest);
 	}));
 
 	addEndpoint(RESTEndpoint("POST:/v1/admin/console/(\\w+)/", {"command"}, [this] (APIRequest& apiRequest) -> void {
@@ -292,6 +297,12 @@ void RESTServer::createProxies() {
 	if (mStatisticsManager == nullptr) {
 		throw OutOfMemoryError();
 	}
+
+	mVOIPManagerProxy = new APIProxyVOIPManager();
+
+	if (mVOIPManagerProxy == nullptr) {
+		throw OutOfMemoryError();
+	}
 }
 
 void RESTServer::destroyProxies() {
@@ -323,6 +334,11 @@ void RESTServer::destroyProxies() {
 	if (mStatisticsManager != nullptr) {
 		delete mStatisticsManager;
 		mStatisticsManager = nullptr;
+	}
+
+	if (mVOIPManagerProxy != nullptr) {
+		delete mVOIPManagerProxy;
+		mVOIPManagerProxy = nullptr;
 	}
 }
 
