@@ -3700,6 +3700,11 @@ bool PlayerObjectImplementation::isIgnoring(const String& name) const {
 	return !nameLower.isEmpty() && ignoreList.contains(nameLower);
 }
 
+bool PlayerObjectImplementation::isFriend(const String& name) const {
+	String nameLower = name.toLowerCase();
+	return !nameLower.isEmpty() && friendList.contains(nameLower);
+}
+
 void PlayerObjectImplementation::checkAndShowTOS() {
 	if (getAcceptedTOSVersion() >= ConfigManager::instance()->getTermsOfServiceVersion())
 		return;

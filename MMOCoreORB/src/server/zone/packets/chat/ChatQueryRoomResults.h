@@ -10,16 +10,18 @@
 
 #include "engine/service/proto/BaseMessage.h"
 #include "server/chat/room/ChatRoom.h"
+#include "server/zone/objects/creature/CreatureObject.h"
+#include "server/zone/objects/player/PlayerObject.h"
 
 class ChatQueryRoomResults : public BaseMessage {
 public:
 
-	ChatQueryRoomResults(ChatRoom* room, int requestID = 0) : BaseMessage() {
+	ChatQueryRoomResults(ChatRoom* room, int requestID = 0, CreatureObject* requestingPlayer = nullptr) : BaseMessage() {
 		insertShort(7); // Op Count
 		insertInt(0xC4DE864E); // Opcode
 
 		insertInt(room->getPlayerSize()); //List of players in the chat room.
-		fillPlayerList(room);
+		fillPlayerList(room, requestingPlayer);
 
 		insertInt(room->getInvitedSize()); //List of invited players.
 		fillInvitedList(room);
@@ -62,11 +64,33 @@ public:
 		setCompression(true);
 	}
 
-	void fillPlayerList(ChatRoom* room) {
+	void fillPlayerList(ChatRoom* room, CreatureObject* requestingPlayer = nullptr) {
 		for (int i = 0; i < room->getPlayerSize(); i++) {
+			CreatureObject* player = room->getPlayer(i);
+
+			if (player == nullptr)
+				continue;
+
+			// If requesting player has hide offline enabled, skip players who are offline on their friends list
+			if (requestingPlayer != nullptr && requestingPlayer->isPlayerCreature()) {
+				PlayerObject* requestingGhost = requestingPlayer->getPlayerObject();
+
+				if (requestingGhost != nullptr && requestingGhost->isAnonymous()) {
+					// Check if this player is on the requesting player's friends list
+					String playerName = player->getFirstName().toLowerCase();
+
+					if (requestingGhost->isFriend(playerName)) {
+						// Player is a friend, check if they are online
+						if (!player->isOnline()) {
+							continue; // Skip offline friends
+						}
+					}
+				}
+			}
+
 			insertAscii("SWG");
 			insertAscii(room->getGalaxyName());
-			insertAscii(room->getPlayer(i)->getFirstName());
+			insertAscii(player->getFirstName());
 		}
 	}
 
