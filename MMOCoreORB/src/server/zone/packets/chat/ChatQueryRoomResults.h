@@ -9,7 +9,16 @@
 #define CHATQUERYROOMRESULTS_H_
 
 #include "engine/service/proto/BaseMessage.h"
-#include "server/chat/room/ChatRoom.h"
+
+namespace server {
+namespace chat {
+namespace room {
+class ChatRoom;
+}
+}
+}
+
+using namespace server::chat::room;
 
 class ChatQueryRoomResults : public BaseMessage {
 public:
