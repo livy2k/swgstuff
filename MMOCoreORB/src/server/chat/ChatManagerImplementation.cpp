@@ -905,6 +905,11 @@ void ChatManagerImplementation::handleSocialInternalMessage(CreatureObject* send
 }
 
 void ChatManagerImplementation::sendRoomList(CreatureObject* player) {
+	// Disabled: Chat room browser window is not needed
+	return;
+
+	// Original code below (commented out)
+	/*
 	ChatRoomList* crl = new ChatRoomList();
 
 	ReadLocker _locker(_this.getReferenceUnsafeStaticCast());
@@ -929,7 +934,7 @@ void ChatManagerImplementation::sendRoomList(CreatureObject* player) {
 
 	crl->insertChannelListCount();
 	player->sendMessage(crl);
-
+	*/
 }
 
 void ChatManagerImplementation::addPlayer(CreatureObject* player) {
