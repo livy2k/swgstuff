@@ -16,12 +16,12 @@
 class ChatQueryRoomResults : public BaseMessage {
 public:
 
-	ChatQueryRoomResults(ChatRoom* room, int requestID = 0, CreatureObject* requestingPlayer = nullptr) : BaseMessage() {
+	ChatQueryRoomResults(ChatRoom* room, int requestID = 0) : BaseMessage() {
 		insertShort(7); // Op Count
 		insertInt(0xC4DE864E); // Opcode
 
 		insertInt(room->getPlayerSize()); //List of players in the chat room.
-		fillPlayerList(room, requestingPlayer);
+		fillPlayerList(room);
 
 		insertInt(room->getInvitedSize()); //List of invited players.
 		fillInvitedList(room);
@@ -64,7 +64,7 @@ public:
 		setCompression(true);
 	}
 
-	void fillPlayerList(ChatRoom* room, CreatureObject* requestingPlayer = nullptr) {
+	void fillPlayerList(ChatRoom* room) {
 		// Disabled: Chat room player list is not sent to prevent scanning for anonymous players
 		return;
 	}

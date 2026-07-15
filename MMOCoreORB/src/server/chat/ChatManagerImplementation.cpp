@@ -2307,7 +2307,7 @@ void ChatManagerImplementation::handleChatQueryRoom(CreatureObject* player, cons
 
 	Locker lock(room);
 
-	ChatQueryRoomResults* packet = new ChatQueryRoomResults(room, requestID, player);
+	ChatQueryRoomResults* packet = new ChatQueryRoomResults(room, requestID);
 	player->sendMessage(packet);
 }
 
@@ -2317,7 +2317,6 @@ void ChatManagerImplementation::broadcastQueryResultsToRoom(ChatRoom* room) {
 	if (room == nullptr)
 		return;
 
-	// When broadcasting to the room, we don't have a specific requesting player
 	ChatQueryRoomResults* notification = new ChatQueryRoomResults(room);
 	room->broadcastMessage(notification);
 }
