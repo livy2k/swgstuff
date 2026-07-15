@@ -80,12 +80,8 @@ public:
 	}
 
 	void run() {
-		ChatManager* chatManager = server->getChatManager();
-
-		ManagedReference<CreatureObject*> player = client->getPlayer();
-
-		if (player != nullptr && chatManager != nullptr)
-			chatManager->sendRoomList(player);
+		// Disabled: Chat room browser window is not needed
+		return;
 	}
 };
 
