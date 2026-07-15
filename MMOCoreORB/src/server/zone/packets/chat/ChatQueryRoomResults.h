@@ -65,33 +65,8 @@ public:
 	}
 
 	void fillPlayerList(ChatRoom* room, CreatureObject* requestingPlayer = nullptr) {
-		for (int i = 0; i < room->getPlayerSize(); i++) {
-			CreatureObject* player = room->getPlayer(i);
-
-			if (player == nullptr)
-				continue;
-
-			// If requesting player has hide offline enabled, skip players who are offline on their friends list
-			if (requestingPlayer != nullptr && requestingPlayer->isPlayerCreature()) {
-				PlayerObject* requestingGhost = requestingPlayer->getPlayerObject();
-
-				if (requestingGhost != nullptr && requestingGhost->isAnonymous()) {
-					// Check if this player is on the requesting player's friends list
-					String playerName = player->getFirstName().toLowerCase();
-
-					if (requestingGhost->isFriend(playerName)) {
-						// Player is a friend, check if they are online
-						if (!player->isOnline()) {
-							continue; // Skip offline friends
-						}
-					}
-				}
-			}
-
-			insertAscii("SWG");
-			insertAscii(room->getGalaxyName());
-			insertAscii(player->getFirstName());
-		}
+		// Disabled: Chat room player list is not sent to prevent scanning for anonymous players
+		return;
 	}
 
 	void fillInvitedList(ChatRoom* room) {
